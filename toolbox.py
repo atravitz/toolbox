@@ -6,6 +6,11 @@ import os
 import pandas as pd
 from scipy import integrate
 
+def lj(r, epsilon, sigma, R):
+    """Return lennard jones force and potential."""
+    F = 4 * epsilon / (r-R) * (12 * (sigma / (r-R))**12 - 6 * (sigma / (r-R))**6)
+    V = 4 * epsilon * ((sigma / (r-R))**12 - (sigma / (r-R))**6)
+    return(V, F)
 
 def force_to_potential(dist, force):
     """
