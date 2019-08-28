@@ -62,18 +62,27 @@ def periodicBC(vec, box):
     if (newvec[2] < -box[2]/2.): newvec[2] += box[2]
     return newvec
 
+def autocorr(x):
+    """perform autocorrelation on an array of scalars"""
+    n = len(x)
+    x = x-x.mean()
+    r = np.correlate(x,x,mode ='full')[-n:]
+    r /= np.max(r)
+    return r
+
 
 def vector_autocorr(vec):
-    """perform autocorrelation on a vector,
+    """perform autocorrelation on an array of vectors,
        returns a list containing correlation values
        """
-    mean = np.mean(vec, axis=0)
-    var = np.var(vec, axis=0)
     n = len(vec)
+    mean = np.mean(vec, axis=0)
+
     R = np.zeros(n)
     for k in np.arange(0,n):
         sum = 0
         for t in np.arange(0, n-k):
             sum += np.dot(vec[t],vec[t+k])
         R[k]=sum/((n-k))
+    R /= max(R)
     return R

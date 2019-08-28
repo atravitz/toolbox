@@ -51,13 +51,24 @@ class PotentialTests(unittest.TestCase):
         self.assertLess(np.max(percent_error), 1)
 
 class CorrTests(unittest.TestCase):
-    def test_scalar(self):
-        """ """
-        unit_vecs = np.array([[0,0,1], [0,0,1]])
-        # print(unit_vecs.shape)
+    def test_scalar_sin(self):
+        """test autocorr with a sin function """
+        x_range = np.linspace(0,3,100)
+        sin_x = np.sin(x_range*2*np.pi)
+        autocorr(sin_x)
 
-    def test_unit_vec(self):
-        pass
+    def test_scalar_random(self):
+        random = np.random.standard_normal(size=50)
+        ac = autocorr(random)
+        self.assertEqual(ac[0], 1.0)
+
+    def test_vec_unit(self):
+        unit_vecs = np.array([[0,0,1], [0,0,1]])
+
+    def test_vec_random(self):
+        random = np.random.standard_normal(size=(50,3))
+        ac = vector_autocorr(random)
+        self.assertEqual(ac[0], 1.0)
 
 if __name__ == '__main__':
     unittest.main()
