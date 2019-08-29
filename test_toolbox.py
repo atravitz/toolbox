@@ -11,7 +11,7 @@ class PotentialTests(unittest.TestCase):
         self.epsilon = 1.0
         self.sigma = 1.0
         self.R = 0
-        self.r_values = np.linspace(1+self.R, 2.5*self.sigma+self.R, 100)
+        self.r_values = np.linspace(1+self.R, 3.5*self.sigma+self.R, 100)
         self.V_true, self.F_true = lj(r=self.r_values,
                             epsilon=self.epsilon,
                             sigma=self.sigma,
@@ -23,12 +23,13 @@ class PotentialTests(unittest.TestCase):
         """Uses a lj potential to test force_to_potential()."""
         # TODO: Come up with reasonable and universal criteria
 
+        print(self.F_true[-1])
         V_test = force_to_potential(self.r_values, self.F_true)
-
         plt.figure(dpi=120)
         plt.plot(self.r_values, self.F_true, 'k--', label='F_true')
         plt.plot(self.r_values, self.V_true, '.', label='V_true')
         plt.plot(self.r_values[1:], V_test,'.', label='V_test')
+        plt.ylim(-10,10)
         plt.legend()
         plt.savefig('test_f2p.png')
 
